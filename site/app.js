@@ -58,11 +58,14 @@ function dominant(src){
   });
 }
 const lum=([r,g,b])=>(0.2126*r+0.7152*g+0.0722*b)/255;
+const mix=(a,b,t)=>a.map((v,i)=>Math.round(v+(b[i]-v)*t));
 function applyTint(rgb){
   if(!rgb){sheet.style.removeProperty("--tint");sheet.classList.remove("dark");return}
-  const dark=lum(rgb)<0.55;
-  sheet.style.setProperty("--tint",`rgb(${rgb.join(",")})`);
-  sheet.classList.toggle("dark",dark);
+  /* color sólido derivado de la portada, separado de ella para que no se funda */
+  const L=lum(rgb);
+  const c=L>0.5?mix(rgb,[0,0,0],0.55):L>0.14?mix(rgb,[0,0,0],0.45):mix(rgb,[255,255,255],0.82);
+  sheet.style.setProperty("--tint",`rgb(${c.join(",")})`);
+  sheet.classList.toggle("dark",lum(c)<0.5);
 }
 
 /* ---------- filtros ---------- */
@@ -80,8 +83,8 @@ function setup(){
   if(A.some(x=>x.rare!=null))rareopt.hidden=false;
   /* tarjetas de sesiones */
   shelf.innerHTML=ses.map(v=>{const xs=A.filter(x=>x.s.includes(v));const pick=xs.filter(x=>x.cover).slice(0,3);
-    return `<button class="scard" data-v="${esc(v)}"><div class="covers">${pick.map(x=>`<img src="${esc(x.cover)}" alt="" loading="lazy">`).join("")}</div>
-      <div class="sname">${CURADAS.has(v)?'<span class="star">★</span> ':""}${esc(v)}</div><div class="scount">${xs.length} discos</div></button>`}).join("");
+    return `<button class="scard" data-v="${esc(v)}"><span class="covers">${pick.slice(0,2).map(x=>`<img src="${esc(x.cover)}" alt="" loading="lazy">`).join("")}</span>
+      <span class="sname">${CURADAS.has(v)?'<span class="star">★</span> ':""}${esc(v)}</span><span class="scount">${xs.length}</span></button>`}).join("");
   shelf.onclick=e=>{const b=e.target.closest(".scard");if(!b)return;const v=b.dataset.v;st.session=(st.session===v?null:v);st.page=1;render();
     if(st.session){const y=document.querySelector(".bar").getBoundingClientRect().top+scrollY-stick.offsetHeight-8;scrollTo({top:y,behavior:"smooth"})}};
 }
