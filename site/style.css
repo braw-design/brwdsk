@@ -29,7 +29,8 @@ h1{font-family:Sora,sans-serif;font-weight:800;font-size:clamp(64px,24.5vw,190px
 .adv.open{display:block}
 .chip .star{color:var(--accent)}
 .chip.on .star{color:#fff}
-.nota{border-left:3px solid var(--accent);padding:4px 0 4px 12px;margin:-6px 0 22px;font-size:15px;line-height:1.45;font-style:italic}
+.nota{border-left:3px solid var(--accent);padding:4px 0 4px 12px;margin:-6px 0 22px;font-size:15px;line-height:1.5}
+.nota em{display:block;margin-top:8px;font-family:Sora,sans-serif;font-style:italic;font-weight:700;letter-spacing:-.01em}
 .nota b{display:block;font-style:normal;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);margin-bottom:4px}
 ol.tracks li.side{counter-increment:none;border-bottom:0;padding:16px 0 4px;font-size:10px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--accent)}
 ol.tracks li.side::before{content:none}
