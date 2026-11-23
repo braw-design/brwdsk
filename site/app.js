@@ -123,6 +123,7 @@ function tracks(x,qn){
 }
 
 /* ---------- ficha del disco ---------- */
+const fmtNote=t=>esc(t).replace(/\s*\*([^*]+)\*/g,"<em>$1</em>").replace(/\n/g,"<br>");
 let isOpen=false;
 function open(x,push=true){
   const qn=norm(st.q.trim());
@@ -135,7 +136,7 @@ function open(x,push=true){
    <a class="cta" href="${sp}" target="_blank" rel="noopener"><span class="l">
     <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm4.6 14.4a.6.6 0 0 1-.9.2c-2.4-1.5-5.4-1.8-9-1a.6.6 0 1 1-.3-1.2c3.9-.9 7.2-.5 9.9 1.1.3.2.4.6.3.9Zm1.2-2.7a.8.8 0 0 1-1.1.3c-2.7-1.7-6.9-2.2-10.1-1.2a.8.8 0 1 1-.5-1.5c3.7-1.1 8.3-.6 11.4 1.3.4.2.5.7.3 1.1Zm.1-2.8C14.7 9 9.4 8.8 6.3 9.7a.9.9 0 1 1-.5-1.8c3.5-1.1 9.4-.9 13.1 1.3a.9.9 0 1 1-1 1.7Z"/></svg>
     Abrir en Spotify</span><span class="r">↗</span></a>
-   ${x.note?`<div class="nota"><b>Nota de la casa</b>${esc(x.note)}</div>`:""}
+   ${x.note?`<div class="nota"><b>Nota de la casa</b>${fmtNote(x.note)}</div>`:""}
    <div class="meta">
     <div><b>Sello</b><span>${esc(x.lbl)}</span></div>
     <div><b>Estilo</b><span>${esc(x.st||x.g)}</span></div>
