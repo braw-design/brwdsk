@@ -23,11 +23,12 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: main
       - uses: actions/setup-node@v4
         with:
           node-version: 20
       - name: Descargar colección y portadas
-        if: github.event_name == 'workflow_dispatch'
         env:
           DISCOGS_TOKEN: ${{ secrets.DISCOGS_TOKEN }}
           DISCOGS_USER: brwdsk
@@ -35,7 +36,6 @@ jobs:
           npm install --no-audit --no-fund
           node scripts/sync.mjs
       - name: Guardar cambios
-        if: github.event_name == 'workflow_dispatch'
         run: |
           git config user.name "brwdsk-bot"
           git config user.email "brwdsk-bot@users.noreply.github.com"
