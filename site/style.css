@@ -5,7 +5,7 @@
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{background:var(--bg);color:var(--ink);font-family:Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
 button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
-.wrap{max-width:1100px;margin:0 auto;padding:14px 18px 80px}
+.wrap{max-width:1280px;margin:0 auto;padding:14px 18px 80px}
 
 .top{display:flex;justify-content:space-between;align-items:center;font-size:10px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;padding-bottom:10px;border-bottom:1px solid var(--line)}
 .top i{font-style:normal;color:var(--accent)}
@@ -88,10 +88,10 @@ h1 span{color:var(--accent)}
 
 .sheet-bg{position:fixed;inset:0;background:#1118;opacity:0;pointer-events:none;transition:opacity .25s;z-index:10}
 .sheet-bg.open{opacity:1;pointer-events:auto}
-.sheet{position:fixed;left:0;right:0;bottom:0;max-height:92vh;overflow-y:auto;background:var(--bg2);border-top:1.5px solid var(--line);transform:translateY(100%);transition:transform .3s cubic-bezier(.2,.8,.2,1);z-index:11;padding:14px 18px 34px;max-width:640px;margin:0 auto}
+.sheet{--tint:var(--bg2);position:fixed;left:0;right:0;bottom:0;max-height:86vh;overflow-y:auto;overscroll-behavior:contain;background:var(--bg2);border-top:1.5px solid var(--line);border-radius:14px 14px 0 0;transform:translateY(100%);transition:transform .32s cubic-bezier(.2,.8,.2,1),background .4s;z-index:11;max-width:640px;margin:0 auto;box-shadow:0 -20px 60px -20px #0006}
 .sheet.open{transform:none}
-.grab{width:36px;height:3px;background:var(--ink);margin:0 auto 16px}
-.close{position:absolute;right:14px;top:12px;width:34px;height:34px;background:var(--ink);color:var(--bg2);font-size:18px}
+.grab{position:absolute;left:50%;top:6px;width:36px;height:4px;border-radius:2px;background:currentColor;opacity:.35;transform:translateX(-50%)}
+.close{flex-shrink:0;width:36px;height:36px;border-radius:50%;background:var(--ink);color:var(--bg2);font-size:20px;line-height:1}
 .hero{display:flex;flex-direction:column;gap:18px;margin-bottom:20px}
 .hero .stage{position:relative;width:62%;max-width:260px}
 .hero .sleeve{z-index:2}
@@ -114,13 +114,40 @@ ol.tracks{list-style:none;counter-reset:t}
 ol.tracks li{counter-increment:t;display:flex;gap:14px;padding:11px 0;border-bottom:1px solid #1112;font-size:14px}
 ol.tracks li::before{content:counter(t,decimal-leading-zero);color:var(--mute);font-size:11px;font-weight:700;padding-top:2px;font-variant-numeric:tabular-nums}
 ol.tracks li.hit{color:var(--accent);font-weight:600}
-.note{margin-top:36px;color:var(--mute);font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;text-align:center;line-height:1.6}
-@media(min-width:700px){.grid{grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:32px 20px}}
+@media(min-width:700px){.grid{grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:32px 20px}}
 
-.album .stage2{position:relative}
-.album .sleeve{z-index:2}
-.peek{position:absolute;top:4%;left:4%;width:92%;aspect-ratio:1;border-radius:50%;background:repeating-radial-gradient(circle,#111 0 2px,#1d1d1d 2px 3px);z-index:1;transition:transform .45s cubic-bezier(.2,.8,.2,1);display:grid;place-items:center}
-.peek i{width:34%;aspect-ratio:1;border-radius:50%;display:block}
-@media (hover:hover){.album:hover .peek{transform:translateX(26%) rotate(40deg)}.album:hover .sleeve{transform:translateY(-3px)}}
+
+/* ronda 2 */
+html.lock,html.lock body{overflow:hidden}
+.sheet-bg{backdrop-filter:blur(2px)}
+.sbar{position:sticky;top:0;z-index:3;display:flex;align-items:center;gap:12px;padding:16px 18px 10px;background:color-mix(in srgb,var(--tint) 94%,transparent);backdrop-filter:blur(8px)}
+.sbar-t{flex:1;min-width:0;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;opacity:.8}
+.sbody{padding:6px 18px 40px;background:linear-gradient(180deg,var(--tint) 0,var(--tint) 260px,color-mix(in srgb,var(--tint) 25%,var(--bg2)) 470px,var(--bg2) 620px)}
+.sheet.dark .sbar,.sheet.dark .hero{color:#fff}
+.sheet.dark .hero .by{color:rgba(255,255,255,.72)}
+.sheet.dark .pill{border-color:rgba(255,255,255,.55)}
+.sheet.dark .close{background:#fff;color:#111}
+.sheet.dark .cta .l{background:#fff;color:#111}
+.disc i{background:var(--tint)}
+.album .sleeve{transition:transform .25s ease,box-shadow .25s ease}
+@media (hover:hover){.album:hover .sleeve{transform:translateY(-4px);box-shadow:0 22px 30px -18px #000a}.album:hover .title{color:var(--accent)}}
 img.art{width:100%;height:100%;object-fit:cover;display:block}
 .dlink{color:var(--accent);text-decoration:none;font-weight:600}
+.slabel{margin-top:4px}
+.shelf{display:flex;gap:10px;overflow-x:auto;scrollbar-width:none;margin:0 -18px 14px;padding:2px 18px 6px;scroll-snap-type:x proximity}
+.shelf::-webkit-scrollbar{display:none}
+.scard{flex:0 0 150px;scroll-snap-align:start;text-align:left;background:var(--ink);color:var(--bg2);padding:10px 10px 12px;border-radius:3px;transition:background .2s}
+.scard.on{background:var(--accent);color:#fff}
+.scard .covers{position:relative;height:62px;margin-bottom:12px}
+.scard .covers img{position:absolute;top:0;width:62px;height:62px;object-fit:cover;border-radius:2px;box-shadow:0 6px 12px -6px #000}
+.scard .covers img:nth-child(1){left:0;z-index:3}.scard .covers img:nth-child(2){left:34px;z-index:2;opacity:.85}.scard .covers img:nth-child(3){left:68px;z-index:1;opacity:.65}
+.sname{font-family:Sora,sans-serif;font-weight:800;font-size:15px;letter-spacing:-.02em;line-height:1.05}
+.scount{font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;opacity:.65;margin-top:4px}
+.foot{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-top:44px;padding-top:12px;border-top:1px solid var(--line);font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase}
+.foot a{color:var(--accent);text-decoration:none}
+@media(min-width:900px){
+  .sheet{left:auto;right:0;top:0;bottom:0;width:460px;max-width:none;max-height:none;height:100%;margin:0;border-top:0;border-left:1.5px solid var(--line);border-radius:0;transform:translateX(100%)}
+  .sheet .grab{display:none}
+  .shelf{margin:0 0 18px;padding:2px 0 6px}
+  .scard{flex-basis:180px}
+}
